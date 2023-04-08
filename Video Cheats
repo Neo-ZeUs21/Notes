@@ -13,6 +13,8 @@ ffmpeg -i "concat:missmoon__\ 2023-03-15\ 08_00\ [missmoon__].mp4|missmoon__\ 20
 
 ------------------------------------------ Contact sheet
 
+https://p.outlyer.net/vcs
+
 16/9 aspect ratio of video
 -H 400 = photo height
 -i 0.5m or 30s = take pic every 30sec
