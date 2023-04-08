@@ -1,0 +1,104 @@
+sh PINCE.sh 
+
+-----------List all Files in Dir
+for f in *.mp4 ; do echo file \'$f\' >> fileList.txt;
+
+--------Merge all videos together
+
+./ffmpeg -f concat -safe 0 -i fileList.txt -c copy mergedVideo.mp4
+
+ffmpeg -i "concat:input1.mp4|input2.mp4|input3.mp4" -c copy output.mp4
+
+ffmpeg -i "concat:missmoon__\ 2023-03-15\ 08_00\ [missmoon__].mp4|missmoon__\ 2023-03-15\ 08_01\ [missmoon__].mp4|missmoon__\ 2023-03-15\ 08_04\ [missmoon__].mp4|missmoon__\ 2023-03-15\ 08_06\ [missmoon__].mp4|missmoon__\ 2023-03-15\ 08_18\ [missmoon__].mp4|missmoon__\ 2023-03-15\ 08_19\ [missmoon__].mp4" -c copy MissMoon.mp4
+
+------------------------------------------ Contact sheet
+
+16/9 aspect ratio of video
+-H 400 = photo height
+-i 0.5m or 30s = take pic every 30sec
+-t 1h = up to time stamp eg first 1h only
+-f 1h = time from
+-c 4= colums eg 4
+XhYmZs
+
+vcs video.avi -U0 -i 0.5m -c 4 -H 400 -a 16/9 -o name.jpg
+vcs chat-2020-07-06_21.01.20.mkv -U0 -i 5s -c 4 -f 1h40m -t 1h45m -H 400 -o name3.jpg
+
+------------------------------------------ Screen shots
+
+fps=1/60 = take one photo every 60sec
+
+ffmpeg -i video.avi -vf fps=1/60 NAME%03d.jpg
+
+------------------------------------------ Run Minecraft Server
+
+java -Xmx4G -Xms4G -jar server.jar nogui 
+
+------------------------------------------ Remove Duplicate frames from video.
+
+ffmpeg -i input.mp4 -vf mpdecimate,setpts=N/FRAME_RATE/TB out.mp4
+
+------------------------------------------- Cut Video
+
+ffmpeg -i originalvideo.mp4 -ss 0:0:4 -t 0:1:10 -vcodec copy -acodec copy outputvideo.mp4
+
+----------- Set Function is .bashrc
+
+function ffcutvideo() {
+  if [[ $# -eq 0 ]] || [[ $# -eq 1 ]]; then
+    echo 'Please specify a video file, length, and optionally a start time. If no start time is given, ffmpeg will start from the beginning. Time format is H[H]:M[M]:S[S] ie: "ffcutvideo somevideo.mp4 0:1:30 0:0:4" or "ffcutvideo somevideo.mp4 0:1:30"'
+  else
+    if [[ $# -eq 2 ]]; then
+      ffmpeg -i "$1" -t "$2" -vcodec copy -acodec copy cut-"$1"
+    else
+      ffmpeg -i "$1" -ss "$3" -t "$2" -vcodec copy -acodec copy cut-"$1"
+    fi
+  fi
+}
+
+
+-------------------------------------------- Run VCS on all files in dir
+
+for file in Testing/*; do vcs -U0 -i 0.5m -c 4 -H 540 -a 16/9 "$file"; done
+
+--------------
+
+for file in /home/zeus21/Videos/X/Testing/*; do vcs -U0 -i 0.5m -c 4 -H 400 "$file"; done
+
+for file in /run/media/zeus21/Seagate\ Expansion\ Drive/xxx/oppo\ last/*; do vcs -U0 -i 1m -c 4 -H 540 "$file"; done
+
+-------------------------------------------- Scale - Resize - bitrate
+
+ffmpeg -i input.avi -vf scale="iw/2:ih/2" output.avi
+
+ffmpeg -i input.avi -vf scale="720:-1" output.avi
+
+ffmpeg -i input.avi -filter:v scale=720:-1 -c:a copy output.mkv
+
+ffmpeg -i 2021-07-12-09-09-41.mp4 -b:v 1M 2021-07-12-09-09-41-Recode.mp4
+
+-------Batch
+
+for i in *.mp4; do ffmpeg -i "$i" -c:v h264_nvenc "$(basename "$i" .mp4)".avi  ; done
+
+for i in *.mp4; do ffmpeg -i "$i" -b:v 0.5M "$(basename "$i" .mp4)".avi ; done
+
+---------------------TESTS
+
+ffmpeg -i 2021-07-12-09-09-41.mp4 -filter:v scale=720:-1 -c:a copy 2021-07-12-09-09-41-Recode.mp4
+
+ffmpeg -i 2021-07-12-09-09-41.mp4 -b:v 1M 2021-07-12-09-09-41-Recode.mp4
+ffmpeg -i 2021-07-12-09-09-41.mp4 -vf scale="iw/2:ih/2" 2021-07-12-09-09-41-Recode2.mp4
+
+ffmpeg -hwaccel cuda -hwaccel_output_format cuda -i 2021-07-12-09-09-41.mp4 -c:v h264_nvenc -vf "scale=720:-1" -b:v 1M 2021-07-12-09-09-41-Recode3.mp4
+
+ffmpeg -i 2021-07-12-09-09-41.mp4 -c:v h264_nvenc -vf "scale=720:-1" -b:v 1M 2021-07-12-09-09-41-Recode3.mp4
+
+ffmpeg -i 2021-07-12-09-09-41.mp4 -c:v h264_nvenc -vf "scale=720:-1" 2021-07-12-09-09-41-Recode4.mp4
+
+ffmpeg -i 2021-07-12-09-09-41.mp4 -c:v h264_nvenc -vf -b:v 5M 2021-07-12-09-09-41-Recode3.mp4
+
+ffmpeg -i 2021-07-19-11-49-46.mp4 -c:v h264_nvenc 2021-07-19-11-49-46-Recode.mp4
+
+for i in *.mp4; do ffmpeg -i "$i" -c:v h264_nvenc -b:v 0.5M "$(basename "$i" .mp4)".avi ; done
+
