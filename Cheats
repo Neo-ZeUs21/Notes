@@ -1,0 +1,74 @@
+Terminal Progs:
+--==Media==--
+vokoscreenNG, 
+
+--==SYS Mons==--
+BpyTop, Htop, btop, glances, nvtop
+
+--==Sys Info==--
+cpufetch, neofetch acpi
+
+--==Progs==--
+cmatrix -C red, nvidia-smi
+
+--==File Mangers==--
+mc aka "Midnight Commander", ranger, zfz, ytzfz
+
+--==Other==--
+yt-dlp, 
+	
+--==Network==--
+iftop, nload, nethogs, bmon
+
+--==Coding==--
+entr, fish, geany
+	
+--==TO TRY==--
+EDEX
+
+--==Notes==--
+git clone https://github.com/CISofy/lynis.git
+./audit system
+
+----Terminal Dir Size
+du -hs /path/to/directory
+
+-------Disc Space
+df -h, lsblk
+
+-------Test Disks 
+sudo dd if=/dev/sdj1 of=tempfile bs=1M count=1024
+
+------Thinkpad Battery
+
+Install: acpi-call, tlp, thinkpad_api, tp_smapi-dkms, tp_smapi
+
+Run: tlp stat -b, man tlp for full commands
+
+dmesg | grep  -i acpi
+
+
+------Time Shift 
+sudo timeshift --create --comments "A new backup" --tags D,W,M
+
+--tags D stands for Daily Backup
+
+--tags W stands for Weekly Backup
+
+--tags M stands for Monthly Backup
+
+--tags O stands for On-demand Backup
+
+sudo timeshift --create --comments "new backup" --tags D,W,M --snapshot-device /dev/sda1   ????
+
+
+Stat	 			Command
+-----------------------------------------------------------------------
+Disk usage			findmnt -no USED / # + /boot + /boot/efi
+RAM usage			free -th | mawk '/^Total:/{print $3}'
+Pre-installed packages		dpkg --get-selections | wc -l
+Running processes		echo $(( $(pstree -Ta | wc -l) - 3 ))
+Boot duration			systemd-analyze | mawk '{print $(NF-1)" "$NF;exit}'
+Temporary files in RAM		findmnt -no FSTYPE /tmp
+Logs in RAM			findmnt -no FSTYPE /var/log
+SSH pre-installed		ss -tulpn | grep ':22'
