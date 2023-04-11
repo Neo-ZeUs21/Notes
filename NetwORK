@@ -12,4 +12,6 @@ ip link
 
 ip addr show
 
+iwlist wlan0 scan | grep -i ssid
+
 ip addr show scope global | grep inet
