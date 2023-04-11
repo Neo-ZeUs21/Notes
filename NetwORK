@@ -1,0 +1,15 @@
+---iw, ifconfig, ip 
+
+iwconfig wlan0 txpower auto
+
+iwlist wlan0 scan
+
+ifup wlan0
+
+ip link set wlan0 up
+
+ip link
+
+ip addr show
+
+ip addr show scope global | grep inet
