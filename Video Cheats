@@ -5,9 +5,18 @@ sh PINCE.sh
 ffmpeg -i input.mp4 -filter:v "crop=w:h:x:y" output.mp4
 ffmpeg -i input.mp4 -filter:v "crop=480:270:200:100" -c:a copy -qp 0 output.mp4
 
+ffmpeg -i video.mkv -filter:v "crop=1920:1080:540:1920" -c:a copy output.mp4
+
+GPU = ffmpeg -i video.mkv -filter:v "crop=1920:1080:540:1920" -c:v h264_nvenc output.mp4
+
+
+
+
+
 Prev:
 vlc input.mp4 --crop=480x270+200+100
 ffplay -vf "crop=480:270:200:100" input.mp4
+
 
 
 -----------List all Files in Dir
