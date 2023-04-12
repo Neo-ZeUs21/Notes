@@ -1,4 +1,8 @@
 sh PINCE.sh 
+
+----Timed get first 10sec
+yt_dlp --downloader ffmpeg --downloader-args "ffmpeg:-t 10"  "https://www.youtube.com/watch?v=aqz-KE-bpKQ"
+
 ---Test
 ffmpeg -i input.mp4 -b:v 10400k -vcodec h264_vaapi -vf crop=1920:848:0:116 -c:a copy output.mp4
 
