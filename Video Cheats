@@ -37,15 +37,23 @@ ffplay -vf "crop=480:270:200:100" input.mp4
 
 
 -----------List all Files in Dir
-for f in *.mp4 ; do echo file \'$f\' >> fileList.txt;
+#1 Create a text file.
+
+file '10.mov'
+file '11.mov'
+
+Requires file ''
+
+#2 Join them
+
+ffmpeg -f concat -i list.txt -c copy merged.mov
 
 --------Merge all videos together
 
-./ffmpeg -f concat -safe 0 -i fileList.txt -c copy mergedVideo.mp4
+ffmpeg -f concat -safe 0 -i fileList.txt -c copy mergedVideo.mp4
 
 ffmpeg -i "concat:input1.mp4|input2.mp4|input3.mp4" -c copy output.mp4
 
-ffmpeg -i "concat:missmoon__\ 2023-03-15\ 08_00\ [missmoon__].mp4|missmoon__\ 2023-03-15\ 08_01\ [missmoon__].mp4|missmoon__\ 2023-03-15\ 08_04\ [missmoon__].mp4|missmoon__\ 2023-03-15\ 08_06\ [missmoon__].mp4|missmoon__\ 2023-03-15\ 08_18\ [missmoon__].mp4|missmoon__\ 2023-03-15\ 08_19\ [missmoon__].mp4" -c copy MissMoon.mp4
 
 ------------------------------------------ Contact sheet
 
