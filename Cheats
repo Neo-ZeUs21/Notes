@@ -1,4 +1,8 @@
+--==Runs==--:
+dnf list installed
+
 Terminal Progs:
+
 --==Media==--
 vokoscreenNG, 
 
@@ -8,10 +12,10 @@ https://p.outlyer.net/vcs
 BpyTop, Htop, btop, glances, nvtop
 
 --==Sys Info==--
-cpufetch, neofetch acpi
+cpufetch, neofetch, acpi, nvtop
 
 --==Progs==--
-cmatrix -C red, nvidia-smi
+cmatrix -C red, nvidia-smi, 
 
 --==File Mangers==--
 mc aka "Midnight Commander", ranger, zfz, ytzfz
