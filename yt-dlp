@@ -1,0 +1,12 @@
+--------------yt-dlp
+
+https://github.com/yt-dlp/yt-dlp/archive/master.zip
+
+python3 -m pip install -U https://github.com/yt-dlp/yt-dlp/archive/master.zip
+
+pip install -U yt-dlp
+
+yt-dlp <URL>
+
+yt-dlp --property Restart=on-failure <URL> ??
+
