@@ -1,14 +1,19 @@
 sh PINCE.sh 
 
-----Takeout Audio
+---------------------------------No Dupe
+ffmpeg -i input.mp4 -vf mpdecimate,setpts=N/FRAME_RATE/TB out.mp4
+--GPU
+ffmpeg -i no-audio.mp4 -c:v h264_nvenc -vf mpdecimate,setpts=N/FRAME_RATE/TB no-dupe1.mp4
+
+---------------------------------Takeout Audio
 ffmpeg -i $input_file -c copy -an $output_file
 
-----FPS Change
+---------------------------------FPS Change
 ffmpeg -i <input> -filter:v fps=fps=30 <output>
 ----GPU Trans
 ffmpeg -i in.mkv -c:v h264_nvenc -filter:v fps=fps=15 Out-at-15fps.mkv
 
-----Timed get first 10sec
+---------------------------------Timed get first 10sec
 yt_dlp --downloader ffmpeg --downloader-args "ffmpeg:-t 10"  "https://www.youtube.com/watch?v=aqz-KE-bpKQ"
 
 ---Test
