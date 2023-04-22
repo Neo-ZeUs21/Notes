@@ -3,6 +3,9 @@ dnf list installed
 
 Terminal Progs:
 
+--==OC==--
+s-tui
+
 --==Media==--
 vokoscreenNG, 
 
