@@ -1,3 +1,6 @@
+
+sudo systemctl enable --now gdm
+
 --==Runs==--:
 dnf list installed
 
