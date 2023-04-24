@@ -11,6 +11,9 @@ ffmpeg -h decoder=mpeg2_cuvid
 
 ffmpeg -hwaccel cuda -i
 
+---UP UP UP
+https://write.corbpie.com/a-guide-to-upscaling-or-downscaling-video-with-ffmpeg/
+
 -----Random Notes
 
 ffmpeg -hwaccel vaapi -hwaccel_output_format vaapi -vaapi_device /dev/dri/renderD128 -i "Torchwood 01x01 Everything Changes.mkv" -vcodec hevc_vaapi -vf format='nv12|vaapi,hwupload' -map 0 -c:a copy -c:s copy -qp 28 -bf 0 -preset medium -max_muxing_queue_size 2048 "Torchwood 01x01 Everything Changes-output.mkv"
