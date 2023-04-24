@@ -12,7 +12,9 @@ ffmpeg -hwaccel vaapi -hwaccel_output_format vaapi -vaapi_device /dev/dri/render
 
 ffmpeg -hwaccel vaapi -hwaccel_output_format vaapi -vaapi_device /dev/dri/renderD128 -i "suz.mp4" -vcodec hevc_vaapi -c:a copy -c:s copy -qp 27 "Suz-Test.mp4"
 -qp 27 Changes given diff bitrates per video not consistent across othjer bitrates.
-change to -b:v 2M ????????
+change to -b:v 2M ???????? - yes works
+
+for i in *.mp4; do ffmpeg -hwaccel vaapi -hwaccel_output_format vaapi -vaapi_device /dev/dri/renderD128 -i "$i" -vcodec hevc_vaapi -c:a copy -c:s copy -b:v 3M "$(basename "$i" .mp4)".mkv ; done
 
 
 ---------------------------------No Dupe
