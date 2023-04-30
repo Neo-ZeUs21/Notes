@@ -1,0 +1,2 @@
+rsync -a --progress dir1/ dir2
+rsync -a --progress2 dir1/ dir2
