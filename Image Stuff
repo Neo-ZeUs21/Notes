@@ -1,0 +1,22 @@
+----- Need 4 Run
+
+install parallel
+install moreutils
+
+ls -1 *.png | parallel --eta convert '{}' '{.}.jpg'
+***Pipe images to 'parallel' to run an all cores and 'convert' to .jpg ... --eta give ETA in terminal
+
+----- Loop
+
+for i in *.png ; do convert "$i" "${i%.*}.jpg" ; done
+
+----- Mogrify
+
+***Convert and keep original files:
+mogrify -format jpg *.png
+
+***Convert and remove original files:
+mogrify -format jpg *.png && rm *.png
+
+
+
