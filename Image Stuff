@@ -18,5 +18,10 @@ mogrify -format jpg *.png
 ***Convert and remove original files:
 mogrify -format jpg *.png && rm *.png
 
+***If you want some output while it's converting files:
+for i in *.png; do mogrify -format jpg "$i" && rm "$i"; echo "$i converted to ${i%.*}.jpg"; done
+
+***Convert all png files in all subdirectories and give output for each one:
+find . -iname '*.png' | while read i; do mogrify -format jpg "$i" && rm "$i"; echo "Converted $i to ${i%.*}.jpg"; done
 
 
