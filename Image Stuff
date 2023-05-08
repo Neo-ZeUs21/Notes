@@ -24,4 +24,6 @@ for i in *.png; do mogrify -format jpg "$i" && rm "$i"; echo "$i converted to ${
 ***Convert all png files in all subdirectories and give output for each one:
 find . -iname '*.png' | while read i; do mogrify -format jpg "$i" && rm "$i"; echo "Converted $i to ${i%.*}.jpg"; done
 
+----Extension Change
 
+for file in *.jpg ; do mv "$file" "${file%.*}.jpg2" ; done
