@@ -1,0 +1,5 @@
+sudo apt install ranger samba exa xdg-user-dirs neofetch git zram-tools intel-microcode
+
+
+
+xdg-user-dirs-update
