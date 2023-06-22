@@ -1,3 +1,11 @@
 df, lsblk
 
 sudo update-grub2
+
+
+
+while ! yt-dlp -f 2 https://
+do
+    echo waiting for stream
+    sleep 60
+done
