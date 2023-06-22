@@ -9,3 +9,14 @@ do
     echo waiting for stream
     sleep 60
 done
+
+$ until cat missingfile
+do
+    echo waiting for missingfile
+    sleep 10
+done
+
+$ until ./runme
+do
+    sleep 10
+done
