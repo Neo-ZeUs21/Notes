@@ -5,7 +5,7 @@ ffmpeg -i "originalvideo.mp4" -ss 00:00:00 -t 00:01:10 -vcodec copy -acodec copy
 vcs "video.avi" -U0 -i 30s -c 4 -H 540 -j
 
 ----------Batch
-for file in *; do vcs -U0 -i 30s -c 4 -H 540 "$file"; done
+for file in *; do vcs -U0 -i 30s -c 4 -H 540 "$file" -j; done
 
 for i in *.mp4; do ffmpeg -i "$i" -b:v 2M "$(basename "$i" .mp4)".avi ; done
 
