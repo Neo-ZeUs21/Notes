@@ -1,4 +1,4 @@
-sudo apt install ranger samba exa xdg-user-dirs neofetch git zram-tools intel-microcode btop curl
+sudo apt install ranger samba exa xdg-user-dirs neofetch git zram-tools intel-microcode btop curl nala
 
 JellyFin
 curl https://repo.jellyfin.org/install-debuntu.sh | sudo bash
