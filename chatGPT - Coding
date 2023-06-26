@@ -158,6 +158,91 @@ If you have any further questions or need additional assistance, please let me k
 
 --------------------------------
 
+Certainly! I have modified the script to read the stream URLs and names from a file named Monitored-Streams.txt. The script will periodically check the file for updates and dynamically adjust the list of monitored streams accordingly. Here's the updated script:
+
+bash
+
+#!/bin/bash
+
+monitored_streams_file="Monitored-Streams.txt"
+record_limit=10
+recordings_file="recordings.txt"
+
+declare -A streams
+
+initialize_recordings_file() {
+    echo "StreamURL,StreamName,Recordings" > "$recordings_file"
+}
+
+update_recordings_file() {
+    echo "$1,${streams[$1]},$2" >> "$recordings_file"
+}
+
+initialize_recordings_file
+
+trap 'kill $(jobs -p)' EXIT
+
+while true; do
+    if [[ -f "$monitored_streams_file" ]]; then
+        while IFS= read -r line; do
+            stream_url=$(echo "$line" | awk '{print $1}')
+            stream_name=$(echo "$line" | awk '{$1=""; print $0}' | xargs)
+            streams["$stream_url"]=$stream_name
+        done < "$monitored_streams_file"
+    fi
+
+    for stream_url in "${!streams[@]}"; do
+        stream_name=${streams[$stream_url]}
+
+        counter=0
+
+        (
+            while true; do
+                counter=$((counter + 1))
+                if [ $counter -gt $record_limit ]; then
+                    echo "Recording limit reached for stream: $stream_name. Stopping further recordings."
+                    break
+                fi
+
+                echo "Waiting for stream: $stream_name..."
+                while ! yt-dlp -f 2 "$stream_url"; do
+                    echo "Stream $stream_name not live. Retrying in 5 minutes..."
+                    sleep 300
+                done
+
+                echo "Stream $stream_name started. Recording..."
+                # Add any additional options you need for yt-dlp here
+                yt-dlp -f 2 "$stream_url"
+
+                echo "Stream $stream_name finished. Resuming waiting..."
+
+                # Update the recordings count in the file
+                update_recordings_file "$stream_url" "$counter"
+            done
+        ) &
+    done
+
+    sleep 600  # Wait for 10 minutes before checking the monitored streams file again
+done
+
+wait
+
+In this updated script, the monitored_streams_file variable is set to "Monitored-Streams.txt", which specifies the file from which the script will read the stream URLs and names. The script periodically checks the file for updates, and if it exists, it reads the contents of the file and populates the streams associative array with the URLs and names.
+
+The script then continues to monitor and record the streams as before, using the dynamically updated list of monitored streams. The record_limit and recordings_file variables remain the same, as they define the maximum number of recordings per stream and the file to keep track of the recordings, respectively.
+
+Please make sure to create a file named Monitored-Streams.txt in the same directory as the script, and add the stream URLs and names to it, with each entry on a separate line in the following format:
+
+arduino
+
+https://stream1 Stream1
+https://stream2 Stream2
+https://stream3 Stream3
+
+Save the modified script to a file, e.g., record_streams.sh, and make it executable using chmod +x record_streams.sh. You can then run the script with ./record_streams.sh. It will continuously monitor and record the streams specified in the Monitored-Streams.txt file, while dynamically adjusting the list of monitored streams based on updates to the file.
+
+If you have any
+
 
 
 
