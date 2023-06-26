@@ -1,0 +1,35 @@
+write me a Bash script that will wait for a live stream to start record it using the program yt-dlp and then resume waiting for another stream to start once the first is finished. I can provide a starting example if needed.
+ChatGPT
+
+Certainly! I can help you with that. Please provide me with the starting example you mentioned so that I can customize the script accordingly.
+User
+while ! yt-dlp -f 2 https://<stream>; do echo Waiting for stream; sleep 300; done
+ChatGPT
+
+Thank you for providing the starting example. Based on that, I have created a Bash script that will wait for a live stream to start, record it using yt-dlp, and then resume waiting for another stream once the first one is finished. Here's the script:
+
+bash
+
+#!/bin/bash
+
+while true; do
+    echo "Waiting for stream..."
+    while ! yt-dlp -f 2 "https://<stream>"; do
+        echo "Stream not live. Retrying in 5 minutes..."
+        sleep 300
+    done
+
+    echo "Stream started. Recording..."
+    # Add any additional options you need for yt-dlp here
+    yt-dlp -f 2 "https://<stream>"
+
+    echo "Stream finished. Resuming waiting..."
+done
+
+In the script, replace <stream> with the actual URL of the stream you want to record. You can add any additional options you need for yt-dlp within the second yt-dlp command inside the script.
+
+Save the script to a file, e.g., record_stream.sh, and make it executable by running chmod +x record_stream.sh in the terminal. Then, you can execute the script by running ./record_stream.sh. The script will continuously wait for a live stream, record it, and then repeat the process.
+
+Please note that this script assumes you have yt-dlp installed and properly configured on your system. Make sure you have it installed and accessible in your shell environment before running the script.
+
+Remember to replace <stream> with the actual URL of the stream you want to record. If you have any further questions, feel free to ask!
