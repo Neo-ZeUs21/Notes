@@ -33,3 +33,134 @@ Save the script to a file, e.g., record_stream.sh, and make it executable by run
 Please note that this script assumes you have yt-dlp installed and properly configured on your system. Make sure you have it installed and accessible in your shell environment before running the script.
 
 Remember to replace <stream> with the actual URL of the stream you want to record. If you have any further questions, feel free to ask!
+
+can you modify the script to include the monitoring of multiple streams?
+ChatGPT
+
+Certainly! I can modify the script to include monitoring multiple streams simultaneously. Here's an updated version of the script:
+
+bash
+
+#!/bin/bash
+
+declare -a streams=(
+    "https://stream1"
+    "https://stream2"
+    "https://stream3"
+    # Add more stream URLs here
+)
+
+trap 'kill $(jobs -p)' EXIT
+
+for stream in "${streams[@]}"; do
+    (
+        while true; do
+            echo "Waiting for stream: $stream..."
+            while ! yt-dlp -f 2 "$stream"; do
+                echo "Stream $stream not live. Retrying in 5 minutes..."
+                sleep 300
+            done
+
+            echo "Stream $stream started. Recording..."
+            # Add any additional options you need for yt-dlp here
+            yt-dlp -f 2 "$stream"
+
+            echo "Stream $stream finished. Resuming waiting..."
+        done
+    ) &
+done
+
+wait
+
+In this updated version, I've created an array called streams that holds the URLs of the streams you want to monitor and record. You can add as many stream URLs as you need in the array. The script will loop through each stream, wait for it to start, record it using yt-dlp, and then move on to the next stream.
+
+The trap 'kill $(jobs -p)' EXIT line ensures that all background processes are properly terminated when the script exits.
+
+Save the modified script to a file, e.g., record_streams.sh, and make it executable using chmod +x record_streams.sh. Then, you can run the script with ./record_streams.sh. It will monitor and record multiple streams simultaneously.
+
+Remember to replace the placeholder URLs ("https://stream1", "https://stream2", etc.) with the actual URLs of the streams you want to record.
+
+If you have any further questions or need additional assistance, please let me know!
+
+
+-=--------
+
+
+Certainly! I have modified the script to include a counter for each stream and limit the number of recordings to 10 per stream. The script also keeps a file record of the stream recordings and the number of recordings for each stream. Here's the updated script:
+
+bash
+
+#!/bin/bash
+
+declare -A streams=(
+    ["https://stream1"]="Stream1"
+    ["https://stream2"]="Stream2"
+    ["https://stream3"]="Stream3"
+    # Add more stream URLs and names here
+)
+
+record_limit=10
+recordings_file="recordings.txt"
+
+trap 'kill $(jobs -p)' EXIT
+
+initialize_recordings_file() {
+    echo "StreamURL,StreamName,Recordings" > "$recordings_file"
+}
+
+update_recordings_file() {
+    echo "$1,${streams[$1]},$2" >> "$recordings_file"
+}
+
+initialize_recordings_file
+
+for stream_url in "${!streams[@]}"; do
+    stream_name=${streams[$stream_url]}
+    counter=0
+
+    (
+        while true; do
+            counter=$((counter + 1))
+            if [ $counter -gt $record_limit ]; then
+                echo "Recording limit reached for stream: $stream_name. Stopping further recordings."
+                break
+            fi
+
+            echo "Waiting for stream: $stream_name..."
+            while ! yt-dlp -f 2 "$stream_url"; do
+                echo "Stream $stream_name not live. Retrying in 5 minutes..."
+                sleep 300
+            done
+
+            echo "Stream $stream_name started. Recording..."
+            # Add any additional options you need for yt-dlp here
+            yt-dlp -f 2 "$stream_url"
+
+            echo "Stream $stream_name finished. Resuming waiting..."
+
+            # Update the recordings count in the file
+            update_recordings_file "$stream_url" "$counter"
+        done
+    ) &
+done
+
+wait
+
+In this updated script, a record_limit variable is set to 10, specifying the maximum number of recordings per stream. The script also maintains a recordings_file which keeps track of the stream URLs, stream names, and the number of recordings for each stream.
+
+The initialize_recordings_file function is added to create and initialize the recordings file with a header row. The update_recordings_file function is used to append the stream URL, stream name, and the current recordings count to the recordings file.
+
+After each recording, the script increments the counter and checks if it exceeds the record_limit. If the limit is reached, it stops further recordings for that stream. The recordings count is updated in the recordings file accordingly.
+
+Please save the modified script to a file, e.g., record_streams.sh, and make it executable using chmod +x record_streams.sh. You can then run the script with ./record_streams.sh. It will monitor and record multiple streams simultaneously using yt-dlp, while keeping track of the recording limits for each stream in the recordings file.
+
+If you have any further questions or need additional assistance, please let me know!
+
+--------------------------------
+
+
+
+
+
+
+
