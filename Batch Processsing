@@ -1,3 +1,8 @@
 for file in *.MOD; do mv "$file" "$(basename "$file" .MOD).mpg"; done
 
 for file in *.MOI; do rm "$file"; done
+
+
+-----Rename to numerical.
+
+ls -v | cat -n | while read n f; do mv -n "$f" "$n.mp4"; done 
