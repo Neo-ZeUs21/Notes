@@ -1,0 +1,1 @@
+$ ffmpeg -y -vsync 0 -hwaccel vaapi -i yesiamjasse\ 2023-09-15\ 18_45\ \[yesiamjasse\]-cuttest.mp4 -vf "crop=720:720, scale=720:720" -b:v 2M yesiamjasse\ 2023-09-15\ 18_45\ \[yesiamjasse\]-croped.mp4 
