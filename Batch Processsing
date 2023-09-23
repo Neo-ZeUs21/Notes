@@ -7,6 +7,14 @@ for file in *.MOI; do rm "$file"; done
 
 ls -v | cat -n | while read n f; do mv -n "$f" "$n.mp4"; done 
 
+or
+
+ls -v | cat -n | while read n f; do
+  new_name=$(printf "%03d.mp4" "$n")
+  mv -n "$f" "$new_name"
+done
+
+
 for f in *.mp4; do echo "file '$f'" >> mylist.txt; done
 
 ffmpeg -f concat -i mylist.txt -c copy video.mp4
