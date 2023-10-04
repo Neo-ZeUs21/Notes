@@ -1,0 +1,14 @@
+--Pi
+  - raspi-config
+  - rpi-imager
+
+---ARGON POD Display 2.8
+  -Notes-
+    Scripts run best under full desktop mode of Pi not in terminal / lite / core. Buttons also only work in desktop
+    curl https://download.argon40.com/podsystem.sh | bash
+
+    config resolution then buttons
+    - argonpod-config
+
+--Dietpi
+
