@@ -1,3 +1,9 @@
+Frame Extraction
+
+ffmpeg -i input_video.mp4 -ss 00:19:08 -vframes 1 output_frame.jpg
+
+
+
 -----Common
 
 ffmpeg -i "originalvideo.mp4" -ss 00:00:00 -t 00:01:10 -vcodec copy -acodec copy "output.mp4"
