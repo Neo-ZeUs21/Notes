@@ -20,3 +20,6 @@ for f in *.mp4; do echo "file '$f'" >> mylist.txt; done
 ffmpeg -f concat -i mylist.txt -c copy video.mp4
 
 ---------
+
+list all folders with what size they are.
+find -maxdepth 2 -type f -size +1G -exec dirname {} \; | sort | uniq -c | awk '{print $2}' | xargs du -sh | sort -rh > large_files_folders.txt
