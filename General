@@ -1,2 +1,6 @@
+watch -n 30 df -h /dev/sda2
+
+-------------
+
 rsync -a --progress dir1/ dir2
 rsync -a --progress2 dir1/ dir2
