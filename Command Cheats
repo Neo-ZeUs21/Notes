@@ -1,3 +1,7 @@
+--Sort dir from hihg to low---
+du -h --max-depth=1 . | sort -rh
+
+
 df, lsblk
 
 sudo update-grub2
