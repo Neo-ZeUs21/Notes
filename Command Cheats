@@ -1,6 +1,9 @@
 --Sort dir from hihg to low---
 du -h --max-depth=1 . | sort -rh
 
+yt-dlp -f bestvideo[ext=mp4]+bestaudio[ext=m4a]/mp4 <URL>
+
+
 
 df, lsblk
 
